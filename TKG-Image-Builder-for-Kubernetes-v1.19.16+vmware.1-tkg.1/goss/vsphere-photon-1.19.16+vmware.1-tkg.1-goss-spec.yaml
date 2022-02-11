@@ -1,39 +1,56 @@
 package:
-  audit:
+  apparmor-parser:
     installed: true
-  ca-certificates:
+  audit:
     installed: true
   chrony:
     installed: true
   cloud-init:
     installed: true
-  cloud-utils-growpart:
+  cloud-utils:
     installed: true
   conntrack-tools:
     installed: true
-  curl:
+  distrib-compat:
     installed: true
   ebtables:
+    installed: true
+  ethtool:
     installed: true
   jq:
     installed: true
   libseccomp:
     installed: true
+  net-tools:
+    installed: true
+  nfs-utils:
+    installed: true
   ntp:
     installed: false
   open-vm-tools:
+    installed: true
+  openssl-c_rehash:
     installed: true
   python-netifaces:
     installed: true
   python-requests:
     installed: true
-  python2-pip:
+  python3-netifaces:
+    installed: true
+  python3-pip:
+    installed: true
+  rng-tools:
     installed: true
   socat:
     installed: true
-  yum-utils:
+  tar:
+    installed: true
+  unzip:
     installed: true
 service:
+  apparmor:
+    enabled: false
+    running: false
   auditd:
     enabled: true
     running: true
@@ -84,19 +101,19 @@ command:
   kubeadm version -o json | jq .clientVersion.gitVersion | tr -d '"' | awk '{print substr($1,2); }':
     exit-status: 0
     stdout:
-    - 1.19.16+vmware.1
+    - 1.20.14+vmware.1
     stderr: []
     timeout: 0
   kubectl version --short --client=true -o json | jq .clientVersion.gitVersion | tr -d '"' | awk '{print substr($1,2); }':
     exit-status: 0
     stdout:
-    - 1.19.16+vmware.1
+    - 1.20.14+vmware.1
     stderr: []
     timeout: 0
   kubelet --version | awk -F' ' '{print $2}'  | tr -d '"' | awk '{print substr($1,2); }':
     exit-status: 0
     stdout:
-    - 1.19.16+vmware.1
+    - 1.20.14+vmware.1
     stderr: []
     timeout: 0
 kernel-param:
@@ -114,6 +131,10 @@ kernel-param:
     value: "8192"
   net.ipv4.neigh.default.gc_thresh3:
     value: "16384"
+  net.ipv4.tcp_congestion_control:
+    value: bbr
+  net.ipv4.tcp_limit_output_bytes:
+    value: "524288"
   net.ipv6.conf.all.disable_ipv6:
     value: "0"
   net.ipv6.conf.all.forwarding:
